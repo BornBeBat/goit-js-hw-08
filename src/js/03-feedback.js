@@ -1,26 +1,17 @@
 const throttle = require('lodash.throttle');
 
 const form = document.querySelector('.feedback-form');
-const feedback_form_state = getValue();
+let feedback_form_state = getValue();
 const throtledInput = throttle(onInput, 500);
 
 form.addEventListener('input', throtledInput);
 form.addEventListener('click', onClick);
 
 function onInput(event) {
-  //   const { email, message} = feedback_form_state;
   const { name, value } = event.target;
 
-  switch (name) {
-    case 'email':
-      feedback_form_state.email = value;
-      //   email = value;
-      break;
-    case 'message':
-      feedback_form_state.message = value;
-      //   message = value;
-      break;
-  }
+  feedback_form_state[name] = value;
+
   localStorage.setItem(
     'feedback_form_state',
     JSON.stringify(feedback_form_state)
@@ -34,10 +25,11 @@ function onClick(event) {
 
   event.preventDefault();
 
-  console.log('email:', form.email.value);
-  console.log('message:', form.message.value);
-  form.email.value = form.message.value = '';
+  console.log(`  email: ${form.email.value} 
+  message: ${form.message.value}`);
   localStorage.clear();
+  form.email.value = form.message.value = '';
+  feedback_form_state = getValue();
 }
 
 function getValue() {
