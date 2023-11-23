@@ -2,12 +2,12 @@ const throttle = require('lodash.throttle');
 
 const form = document.querySelector('.feedback-form');
 const feedback_form_state = getValue();
-const throtledListen = throttle(formLisen, 500);
+const throtledInput = throttle(onInput, 500);
 
-form.addEventListener('input', throtledListen);
+form.addEventListener('input', throtledInput);
 form.addEventListener('click', onClick);
 
-function formLisen(event) {
+function onInput(event) {
   //   const { email, message} = feedback_form_state;
   const { name, value } = event.target;
 
