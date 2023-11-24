@@ -5,11 +5,10 @@ let feedback_form_state = getValue();
 const throtledInput = throttle(onInput, 500);
 
 form.addEventListener('input', throtledInput);
-form.addEventListener('click', onClick);
+form.addEventListener('submit', onSubmit);
 
 function onInput(event) {
   const { name, value } = event.target;
-
   feedback_form_state[name] = value;
 
   localStorage.setItem(
@@ -18,17 +17,13 @@ function onInput(event) {
   );
 }
 
-function onClick(event) {
-  if (event.target.nodeName !== 'BUTTON') {
-    return;
-  }
-
+function onSubmit(event) {
   event.preventDefault();
 
-  console.log(`  email: ${form.email.value} 
-  message: ${form.message.value}`);
   localStorage.clear();
-  form.email.value = form.message.value = '';
+  event.currentTarget.reset();
+
+  console.log(feedback_form_state);
   feedback_form_state = getValue();
 }
 
