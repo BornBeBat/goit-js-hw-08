@@ -9,7 +9,7 @@ const cardsMarcup = createMarcup(galleryItems);
 
 marcupConteiner.insertAdjacentHTML('beforeend', cardsMarcup);
 
-const gallery = new SimpleLightbox('.gallery a', {
+new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: '400',
 });
