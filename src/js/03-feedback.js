@@ -2,10 +2,7 @@ const throttle = require('lodash.throttle');
 
 const refs = { form: document.querySelector('.feedback-form') };
 
-let feedback_form_state = getValue();
-
-refs.form.addEventListener('input', throttle(onInput, 500));
-refs.form.addEventListener('submit', onSubmit);
+let feedback_form_state = onLoad();
 
 function onInput(event) {
   const { name, value } = event.target;
@@ -24,10 +21,10 @@ function onSubmit(event) {
 
   localStorage.removeItem('feedback_form_state');
   event.currentTarget.reset();
-  feedback_form_state = getValue();
+  feedback_form_state = {};
 }
 
-function getValue() {
+function onLoad() {
   let result;
   try {
     result = JSON.parse(localStorage.getItem('feedback_form_state'));
@@ -42,4 +39,6 @@ function updateForm(obj) {
   Object.entries(obj).forEach(
     ([key, value]) => (refs.form.elements[key].value = value)
   );
+  refs.form.addEventListener('input', throttle(onInput, 500));
+  refs.form.addEventListener('submit', onSubmit);
 }
